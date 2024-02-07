@@ -1,0 +1,96 @@
+
+<html>
+    <head> 
+        <link rel="stylesheet" href="style.css"> 
+        <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+        <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+    </head>
+    <body> 
+        <div class="header">
+        
+            <h1> Islamically-Relevant Arabic Transliterator</h1>
+
+            <img src="quranverse.png">
+
+            <p> This tool was created for the purpose of unifying the ummah.
+                Many Muslims who do not speak Arabic may feel alienated 
+                due the common use of Arabic word within the Muslim community.
+                This tool aims to help aid these Muslims or non-Arabic speakers
+                with understanding the Islamic terminology.
+
+                The tool provides the direct translation of the Arabic word into English, 
+                a detailed explanation of the context of the word, and finally, an example
+                of the word being used in a setence of Islamic context.
+            </p>
+
+
+            <p2> 
+                وَإِنَّ هَـٰذِهِۦٓ أُمَّتُكُمْ أُمَّةًۭ وَٰحِدَةًۭ وَأَنَا۠ رَبُّكُمْ فَٱتَّقُونِ
+
+
+                Surely, this religion of yours, is one, and I am your lord, so fear me.
+
+                Kuntum khaira ummatin ukhrijat linnaasi ta'muroona bilma'roofi wa tanhawna 
+                'anil munkari wa tu'minoona billaah; wa law aamana Ahlul Kitaabi lakaana khairal
+                lahum minhumul mu'minoona wa aksaruhumul faasiqoon
+
+Al-Quran (23.52)
+
+            </p2>
+
+            <py-script> 
+                import tkinter as tk
+
+                #function to translate the word
+                def translate_word():
+                    user_word = check.get().lower()  # Get the user input and convert it to lowercase
+
+                    translations = []
+                    arabic_word = []
+                    english_translation = []
+                    context = []
+
+                    #using txt file I put together containing most ocmon words / definitions
+                    with open("arabic_words.txt", 'r') as a_file:
+                        for line in a_file:
+                            translations.append(line.strip().split(","))
+
+                    for translation in translations:
+                        arabic_word.append(translation[0])
+                        english_translation.append(translation[1])
+                        context.append(translation[2])
+
+                    if user_word in arabic_word:
+                        for i in range(len(translations)):
+                            if user_word == translations[i][0]:
+                                translation_label.config(text=f"Given word: {user_word}\nTranslation: {translations[i][1]}\nContext: {translations[i][2]}")
+                    else:
+                        translation_label.config(text="Translation not found for the given word.")
+
+
+                #Formatting for GUI
+                root = tk.Tk()
+                root.title("Islamically-Relevant Arabic Words Translator")
+                label = tk.Label(root, bg='#9cd991', fg='white', text="Alsalam Alaykum!", font=('Arial', 20))
+                label.pack(padx=30, pady=30)
+                intro = tk.Label(root, text='Please enter the word you would like translated below!', height=5, font=('Arial', 15))
+                intro.pack(padx=10, pady=10)
+
+                check = tk.Entry(root, text='Type here', bg='#9cd991', fg='white', highlightcolor='red', font=('Arial', 16))
+                check.pack(padx=20, pady=20)
+
+                button = tk.Button(root, text="Enter", font=('Arial', 16), command=translate_word)
+                button.pack(padx=20, pady=20)
+
+                translation_label = tk.Label(root, bg='#9cd991', fg='white', text="", font=('Arial', 15))
+                translation_label.pack(padx=10, pady=10)
+
+                root.mainloop()
+
+            </py-script>
+        </div>
+
+
+        </div>
+    </body>
+</html>
